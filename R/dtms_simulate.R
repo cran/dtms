@@ -1,0 +1,105 @@
+#' Simulation of Markov chains
+#'
+#' @description
+#' This function simulates trajectories based on a Markov chain using the
+#' `markovchain` package.
+#'
+#' @param probs Data frame with transition probabilities, as created with \code{dtms_transitions}.
+#' @param matrix Matrix, a matrix of transition probabilities as created with \code{dtms_matrix()},
+#' @param dtms dtms object, as created with \code{dtms}.
+#' @param size Numeric, number of trajectories which will be simulated. Default is 100.
+#' @param start_distr Numeric (optional), distribution of starting states. If NULL, starting states will be assumed to be equally distributed.
+#' @param droplast Logical (optional), drop final time step after the time scale in which every unit is absorbed? Default is TRUE.
+#' @param varnames Character (optional), suffix for variable names in simulated data. Will be pasted with values of the timescale. Default is "T_".
+#'
+#' @return A data frame with simulated trajectories in wide format.
+#' @export
+#'
+#' @examples
+#' simple <- dtms(transient=c("A","B"),
+#'                absorbing="X",
+#'                timescale=0:19)
+#' estdata <- dtms_format(data=simpledata,
+#'                        dtms=simple,
+#'                        idvar="id",
+#'                        timevar="time",
+#'                        statevar="state")
+#' estdata <- dtms_clean(data=estdata,
+#'                       dtms=simple)
+#' fit <- dtms_fit(data=estdata,package="mclogit")
+#' probs    <- dtms_transitions(dtms=simple,
+#'                              model = fit)
+#' dtms_simulate(probs=probs,dtms=simple)
+
+dtms_simulate <- function(probs=NULL,
+                          matrix=NULL,
+                          dtms,
+                          size=100,
+                          start_distr=NULL,
+                          droplast=TRUE,
+                          varnames="T_") {
+
+  # Load markovchain package, because of "new" below
+  requireNamespace("markovchain")
+
+  # Check
+  dtms_proper(dtms)
+
+  # Get matrix if not specified
+  if(is.null(matrix)) matrix <- dtms_matrix(probs=probs,
+                                            dtms=dtms)
+
+  # Time
+  start_time <- min(dtms$timescale)
+  ntime <- length(dtms$timescale)
+
+  # Starting states, short and long names
+  start_state <- dtms$transient
+  starting <- dtms_combine(start_state,start_time,sep=dtms$sep)
+  nstarting <- length(starting)
+
+  # Starting distribution
+  if(is.null(start_distr)) start_distr <- rep(1/nstarting,nstarting)
+
+  # All states
+  all_states <- colnames(matrix)
+
+  # Set class of matrix
+  class(matrix) <- "matrix"
+
+  # Setup
+  sim <- methods::new("markovchain",
+                      states = all_states,
+                      transitionMatrix = as.matrix(matrix),
+                      name = "sim")
+
+  # Data frame
+  simdata <- data.frame(matrix(nrow=0,ncol=ntime))
+
+  # Simulate
+  for(i in 1:size) {
+
+    # Draw initial state
+    initial_state <- sample(starting,
+                            size=1,
+                            prob=start_distr)
+
+    # Generate rest of sequence
+    simseq <- markovchain::rmarkovchain(n = ntime-as.numeric(droplast),
+                                        object = sim,
+                                        t0 = initial_state,
+                                        include.t0=TRUE)
+
+    # Put in data frame
+    simdata <- rbind(simdata,simseq)
+
+  }
+
+  # Nicer names
+  if(droplast) names(simdata) <- paste0(varnames,dtms$timescale) else
+    names(simdata) <- paste0(varnames,c(dtms$timescale,max(dtms$timescale)+dtms$timestep))
+
+  # Return
+  return(simdata)
+
+}
