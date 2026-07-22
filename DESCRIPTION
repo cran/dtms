@@ -1,7 +1,7 @@
 Package: dtms
 Type: Package
 Title: Discrete-Time Multistate Models
-Version: 0.4.2
+Version: 0.5.0
 Authors@R: person(given = "Christian",
                     family = "Dudel",
                     role = c("aut", "cre"),
@@ -10,14 +10,14 @@ Description: Discrete-time multistate models with a user-friendly workflow. The 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.3
 URL: https://github.com/christiandudel/dtms
 BugReports: https://github.com/christiandudel/dtms/issues
 Depends: R (>= 4.1.0)
 Imports: mclogit, nnet, VGAM, doParallel, foreach, markovchain, methods
+Config/roxygen2/version: 8.0.0
 NeedsCompilation: no
-Packaged: 2026-02-20 14:45:53 UTC; Dudel
+Packaged: 2026-07-22 10:36:23 UTC; chris
 Author: Christian Dudel [aut, cre]
 Maintainer: Christian Dudel <dudel@demogr.mpg.de>
 Repository: CRAN
-Date/Publication: 2026-02-25 10:20:07 UTC
+Date/Publication: 2026-07-22 10:50:02 UTC
