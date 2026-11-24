@@ -8,7 +8,7 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-## Authors
+## Author
 
 Christian Dudel, <dudel@demogr.mpg.de>
 
@@ -21,10 +21,10 @@ be removed or changed without warning.
 
 ## Acknowledgements
 
-We thank Peng Li, Alessandro Feraldi, Aapo Hiilamo, Daniel Schneider,
-Donata Stonkute, Marcus Ebeling, Flavia Mazzeo, and Angelo Lorenti for
-helpful comments, suggestions, and code snippets. All errors remain our
-own.
+Peng Li, Andreas Ljungström, Alessandro Feraldi, Aapo Hiilamo, Daniel
+Schneider, Donata Stonkute, Marcus Ebeling, Flavia Mazzeo, and Angelo
+Lorenti provided helpful comments, suggestions, and code. They are not
+responsible for any errors.
 
 ## Citation
 
@@ -32,7 +32,7 @@ If you use this package in your work, please use the following citation
 (or a variation):
 
 Dudel, C. (2026). dtms: discrete-time multistate models in R. R package
-version 0.4.4, available at <https://CRAN.R-project.org/package=dtms>
+version 0.5.2, available at <https://CRAN.R-project.org/package=dtms>
 
 ## Overview
 
@@ -642,7 +642,7 @@ number of units with right censoring:
 dtms_censoring(data=estdata,
                dtms=simple)
 #> Units with left censoring:  242 
-#> Units with gaps:  30 
+#> Units with gaps:  196 
 #> Units with right censoring:  325
 ```
 
@@ -1149,7 +1149,7 @@ right-censored:
 dtms_censoring(data=estdata,
                dtms=work)
 #> Units with left censoring:  2036 
-#> Units with gaps:  93 
+#> Units with gaps:  1720 
 #> Units with right censoring:  1323
 
 ## More advanced censoring example
@@ -1158,7 +1158,7 @@ estdata <- dtms_censoring(data=estdata,
                           add=TRUE,
                           addtype="obs")
 #> Units with left censoring:  2036 
-#> Units with gaps:  93 
+#> Units with gaps:  1720 
 #> Units with right censoring:  1323
 
 estdata |>
@@ -1603,25 +1603,47 @@ bootresults <- dtms_boot(data=estdata,
 summary(bootresults)
 #> $`2.5%`
 #>                        Working Non-working  Retired    TOTAL
-#> start:Working_50     13.072259    2.938360 13.11234 29.36529
-#> start:Non-working_50  8.497198    6.270247 13.27793 28.39367
-#> start:Retired_50      8.408970    3.705670 14.60286 27.10539
-#> AVERAGE              12.226900    3.439973 13.21536 29.11143
-#> start:Working_50     11.672485    4.229545 16.20602 32.62371
-#> start:Non-working_50  7.046492    7.960528 16.46683 32.01989
-#> start:Retired_50      7.446438    5.228206 17.79683 30.99821
-#> AVERAGE              10.061092    5.422133 16.35932 32.36383
+<<<<<<< HEAD
+#> start:Working_50     12.991696    2.947960 13.11973 29.43866
+#> start:Non-working_50  8.390525    6.301673 13.28155 28.46120
+#> start:Retired_50      8.436058    3.740455 14.65783 27.16441
+#> AVERAGE              12.122367    3.406498 13.22795 29.15035
+#> start:Working_50     11.702156    4.207913 16.14505 32.59949
+#> start:Non-working_50  7.077855    7.998301 16.42499 31.99126
+#> start:Retired_50      7.406300    5.196819 17.86288 30.94380
+#> AVERAGE              10.073727    5.395278 16.31453 32.33222
 #> 
 #> $`97.5%`
 #>                        Working Non-working  Retired    TOTAL
-#> start:Working_50     13.595938    3.165286 14.02838 30.37175
-#> start:Non-working_50  9.100973    6.617815 14.27787 29.53194
-#> start:Retired_50      9.185850    4.064242 15.80937 28.70400
-#> AVERAGE              12.729003    3.720703 14.16234 30.16162
-#> start:Working_50     12.405403    4.649069 16.92542 33.40701
-#> start:Non-working_50  7.778372    8.526437 17.21372 32.91966
-#> start:Retired_50      8.103578    5.811997 18.80339 32.15908
-#> AVERAGE              10.707864    5.890394 17.09666 33.18848
+#> start:Working_50     13.651947    3.177929 14.03103 30.33904
+#> start:Non-working_50  9.142931    6.672604 14.25927 29.51100
+#> start:Retired_50      9.270929    4.043946 15.76586 28.52213
+#> AVERAGE              12.774619    3.722457 14.16173 30.12115
+#> start:Working_50     12.416311    4.555825 16.99316 33.43100
+#> start:Non-working_50  7.737342    8.428292 17.26265 32.86937
+#> start:Retired_50      8.209908    5.775806 18.82255 32.10447
+#> AVERAGE              10.785935    5.828853 17.15709 33.19980
+=======
+#> start:Working_50     12.992826    2.921824 13.16365 29.45935
+#> start:Non-working_50  8.379662    6.222999 13.31977 28.49152
+#> start:Retired_50      8.516233    3.706245 14.72466 27.19863
+#> AVERAGE              12.069167    3.446334 13.27117 29.21074
+#> start:Working_50     11.709166    4.219004 16.12182 32.63596
+#> start:Non-working_50  7.131912    7.980680 16.38561 31.91687
+#> start:Retired_50      7.450431    5.214869 17.94225 31.06520
+#> AVERAGE              10.099683    5.403798 16.28336 32.34265
+#> 
+#> $`97.5%`
+#>                        Working Non-working  Retired    TOTAL
+#> start:Working_50     13.575040    3.256457 14.19580 30.54598
+#> start:Non-working_50  9.185647    6.802947 14.46677 29.75933
+#> start:Retired_50      9.275025    4.142512 16.06974 28.69493
+#> AVERAGE              12.748345    3.816012 14.33539 30.34893
+#> start:Working_50     12.443877    4.563330 17.08900 33.49433
+#> start:Non-working_50  7.816087    8.442520 17.37931 33.01174
+#> start:Retired_50      8.235319    5.729466 18.95052 32.29663
+#> AVERAGE              10.905087    5.828764 17.26890 33.29460
+>>>>>>> 26ff02792799c5aff8f12a5ee986f87d27cce163
 ```
 
 ## Using dtms with irregular intervals
@@ -1807,6 +1829,22 @@ Methodological papers:
   Health Metrics 18: 15. <https://doi.org/10.1186/s12963-020-00217-0>
 
 Papers using `dtms` for substantive questions:
+
+- Jeglinsky-Kankainen, I., Hiilamo, A., Keski-Säntti, M., Gissler, M.,
+  Ahonen, M. (2026): Working-life expectancy in people with cerebral
+  palsy in Finland. Dev Med Child Neurol. 2026; 1–10.
+  <https://doi.org/10.1111/dmcn.70582>
+
+- Hiilamo, A., Fugletveit, R., Pitkänen, J., Moretti, M., Martikainen,
+  P., Hermansen, A., Myrskylä, M. (2026): Children´s out-of-home care
+  across Finnish and Norwegian regions: lifetime risks, expected length,
+  and care leaving routes for synthetic cohorts. MPIDR Working Paper
+  2026-001. <https://doi.org/10.4054/MPIDR-WP-2026-001>
+
+- Bramajo, O., Chakraborty, M., Lisabeth, L., Mehta, N. (2026): Changes
+  in Life Expectancy After Stroke Among Americans Aged 50 and Above by
+  Sex, 1996–2018. Journal of the American Geriatrics Society 74:
+  2583-2594. <https://doi.org/10.1111/jgs.70585>
 
 - Murata, S., Ebeling, M., Ono, R., Maeda, M., Schmidt-Mende, K.,
   Fukuda, H., Modig, K. (2026): Understanding Japan’s mortality
